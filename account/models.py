@@ -9,19 +9,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['full_name']
 
     email = models.CharField(
-        db_column='tx_email',
         max_length=256,
+        db_column='tx_email',
         null=False,
         unique=True,
     )
     password = models.CharField(
-        db_column='tx_password',
         max_length=104,
+        db_column='tx_password',
         null=False
     )
     full_name = models.CharField(
-        db_column='tx_name',
         max_length=256,
+        db_column='tx_name',
         null=False
     )
     last_login = models.DateTimeField(
