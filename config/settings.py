@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'core.apps.CoreConfig',
     'rest_framework_simplejwt',
-    'corsheaders'
+    'corsheaders',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
