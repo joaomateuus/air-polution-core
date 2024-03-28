@@ -8,3 +8,10 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     permission_classes = [permissions.UserPermissions,]
 
+    def create(self, request, *args, **kwargs):
+        try:
+            print(request.data)
+            return super().create(request, *args, **kwargs)
+        except Exception as e:
+            print(str(e))
+

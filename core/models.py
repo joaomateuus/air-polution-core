@@ -1,6 +1,6 @@
 from django.db import models
 
-class Bairro(models.Model):
+class Estado(models.Model):
     nome = models.CharField(
         max_length=100,
         db_column='tx_nome',
@@ -22,29 +22,50 @@ class Bairro(models.Model):
         blank=False,
         verbose_name = 'Longitude'
     )
+    imagem_url = models.CharField(
+        max_length=300,
+        db_column='tx_img_url',
+        null=True,
+        blank=True,
+        verbose_name = 'Imagem Url'
+    )
 
     class Meta:
         managed = True
-        db_table = 'tb_bairros'
+        db_table = 'tb_estados'
 
 
 class NivelPoluicao(models.Model):
     class Status(models.TextChoices):
-        RUIM = 'R', ('Ruim')
+        POBRE = 'P', ('Pobre')
+        MUITO_POBRE = 'MP', ('Muito Pobre')
         BOM = 'B', ('Bom')
         MODERADO = 'M', ('Moderado')
+        RAZOAVEL = 'R', ('Razoavel')
 
-    bairro = models.ForeignKey(
-        'Bairro',
+    estado = models.ForeignKey(
+        'Estado',
         on_delete=models.CASCADE,
-        db_column='id_bairro',
+        db_column='id_estado',
         db_index=False,
         null=False,
         blank=False,
-        related_name='nivelpoluicao_bairros',
-        verbose_name='Bairro'
+        related_name='nivelpoluicao_estado',
+        verbose_name='Estado'
     )
-    nivel = models.IntegerField(
+    concentracao_co2 = models.FloatField(
+        db_column='nb_co2',
+        null=False,
+        blank=False,
+        verbose_name='Nivel'
+    )
+    concentracao_no = models.FloatField(
+        db_column='nb_nol',
+        null=False,
+        blank=False,
+        verbose_name='Nivel'
+    )
+    concentracao_no2 = models.FloatField(
         db_column='nb_nivel',
         null=False,
         blank=False,
@@ -57,15 +78,6 @@ class NivelPoluicao(models.Model):
         choices=Status.choices,
         verbose_name='Order Status'
     )
-
-    def save(self, *args, **kwargs):
-        if self.nivel >= 70:
-            self.status = self.Status.RUIM
-        elif self.nivel >= 30:
-            self.status = self.Status.MODERADO
-        else:
-            self.status = self.Status.BOM
-        super().save(*args, **kwargs)
 
     class Meta:
         managed = True

@@ -13,7 +13,8 @@ class UserSerializer(serializers.ModelSerializer):
                queryset = models.User.objects.all(),
                 message = ("Email already exists")
             )
-        ]
+        ],
+        required=True
     )
     is_staff = serializers.BooleanField( 
         required=True

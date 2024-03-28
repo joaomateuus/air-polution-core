@@ -3,9 +3,9 @@ from core import models
 from core import serializers
 from rest_framework import permissions
 
-class BairroViewSet(viewsets.ModelViewSet):
-    queryset = models.Bairro.objects.all()
-    serializer_class = serializers.BairroSerializer
+class EstadoViewSet(viewsets.ModelViewSet):
+    queryset = models.Estado.objects.all()
+    serializer_class = serializers.EstadoSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
 
